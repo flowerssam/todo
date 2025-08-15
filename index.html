@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>to do list-view</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>todo list</h1>
+            <div class="view-toggle">
+                <button id="listViewBtn" class="active">리스트</button>
+                <button id="calendarViewBtn">달력</button>
+            </div>
+        </header>
+        <main>
+            <!-- 할 일 추가 폼 -->
+            <div class="add-todo-form">
+                <input type="text" id="todoInput" placeholder="새로운 할 일을 입력하세요...">
+                <input type="date" id="todoDate">
+                <button id="addBtn">추가</button>
+            </div>
+
+            <!-- 리스트 뷰 -->
+            <div id="listView" class="view active">
+                <div class="todo-list" id="todoList">
+                    <!-- 할 일 목록이 여기에 동적으로 추가됩니다 -->
+                </div>
+            </div>
+
+            <!-- 달력 뷰 -->
+            <div id="calendarView" class="view">
+                <div class="calendar-header">
+                    <button id="prevMonth">&lt;</button>
+                    <h2 id="currentMonth"></h2>
+                    <button id="nextMonth">&gt;</button>
+                </div>
+                <div class="calendar-layout">
+                    <div class="calendar-grid" id="calendarGrid">
+                        <!-- 달력이 여기에 동적으로 생성됩니다 -->
+                    </div>
+                    <div class="selected-date-todos" id="selectedDateTodos">
+                        <!-- 선택된 날짜의 할 일들이 여기에 표시됩니다 -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 편집 모달 -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>할 일 수정</h2>
+            <input type="text" id="editTodoInput">
+            <input type="date" id="editTodoDate">
+            <div class="modal-buttons">
+                <button id="saveEditBtn">저장</button>
+                <button id="cancelEditBtn">취소</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

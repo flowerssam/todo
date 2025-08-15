@@ -1,0 +1,523 @@
+/* 기본 설정 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    /* 파스텔 그라디언트 + 꽃무늬 타일 패턴 */
+    background-image:
+        /* 꽃무늬: 5개의 꽃잎 + 중앙 점을 가진 타일을 반복 */
+        radial-gradient(circle at 14px 14px, rgba(255, 182, 193, 0.28) 8px, transparent 8px),
+        radial-gradient(circle at 34px 14px, rgba(255, 182, 193, 0.28) 8px, transparent 8px),
+        radial-gradient(circle at 14px 34px, rgba(255, 182, 193, 0.28) 8px, transparent 8px),
+        radial-gradient(circle at 34px 34px, rgba(255, 182, 193, 0.28) 8px, transparent 8px),
+        radial-gradient(circle at 24px 24px, rgba(255, 221, 87, 0.35) 3px, transparent 3px),
+        linear-gradient(135deg, #ffe2ea 0%, #fff5d7 33%, #e8fff3 66%, #eef4ff 100%);
+    background-size: 48px 48px, 48px 48px, 48px 48px, 48px 48px, 48px 48px, 100% 100%;
+    background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;
+    min-height: 100vh;
+    color: #2d3436;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* 헤더 */
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    /* 반투명 카드 + 꽃무늬 패턴 (희미하게) */
+    background:
+        radial-gradient(circle at 10px 10px, rgba(255, 182, 193, 0.12) 6px, transparent 6px),
+        radial-gradient(circle at 26px 10px, rgba(255, 182, 193, 0.12) 6px, transparent 6px),
+        radial-gradient(circle at 10px 26px, rgba(255, 182, 193, 0.12) 6px, transparent 6px),
+        radial-gradient(circle at 26px 26px, rgba(255, 182, 193, 0.12) 6px, transparent 6px),
+        radial-gradient(circle at 18px 18px, rgba(255, 221, 87, 0.18) 2px, transparent 2px),
+        rgba(255, 255, 255, 0.9);
+    background-size: 36px 36px, 36px 36px, 36px 36px, 36px 36px, 36px 36px, auto;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    font-size: 2.5rem;
+    color: #6c5ce7;
+    margin-bottom: 15px;
+    font-weight: 300;
+}
+
+.view-toggle {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.view-toggle button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    background: #ddd6fe;
+    color: #6c5ce7;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.view-toggle button.active,
+.view-toggle button:hover {
+    background: #6c5ce7;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
+}
+
+/* 할 일 추가 폼 */
+.add-todo-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+    background:
+        radial-gradient(circle at 10px 10px, rgba(255, 182, 193, 0.10) 5px, transparent 5px),
+        radial-gradient(circle at 22px 10px, rgba(255, 182, 193, 0.10) 5px, transparent 5px),
+        radial-gradient(circle at 10px 22px, rgba(255, 182, 193, 0.10) 5px, transparent 5px),
+        radial-gradient(circle at 22px 22px, rgba(255, 182, 193, 0.10) 5px, transparent 5px),
+        radial-gradient(circle at 16px 16px, rgba(255, 221, 87, 0.16) 2px, transparent 2px),
+        rgba(255, 255, 255, 0.9);
+    background-size: 32px 32px, 32px 32px, 32px 32px, 32px 32px, 32px 32px, auto;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.add-todo-form input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 2px solid #e17055;
+    border-radius: 10px;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.add-todo-form input:focus {
+    border-color: #6c5ce7;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(108, 92, 231, 0.2);
+}
+
+.add-todo-form button {
+    padding: 12px 24px;
+    background: #00b894;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.add-todo-form button:hover {
+    background: #00a085;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 184, 148, 0.3);
+}
+
+/* 뷰 전환 */
+.view {
+    display: none;
+}
+
+.view.active {
+    display: block;
+}
+
+/* 리스트 뷰 */
+.todo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.todo-item {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+    /* 카드에 아주 옅은 꽃무늬 패턴 */
+    background-image:
+        radial-gradient(circle at 8px 8px, rgba(255, 182, 193, 0.10) 4px, transparent 4px),
+        radial-gradient(circle at 18px 8px, rgba(255, 182, 193, 0.10) 4px, transparent 4px),
+        radial-gradient(circle at 8px 18px, rgba(255, 182, 193, 0.10) 4px, transparent 4px),
+        radial-gradient(circle at 18px 18px, rgba(255, 182, 193, 0.10) 4px, transparent 4px),
+        radial-gradient(circle at 13px 13px, rgba(255, 221, 87, 0.14) 1.5px, transparent 1.5px);
+    background-size: 26px 26px;
+}
+
+.todo-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+}
+
+.todo-item.completed {
+    opacity: 0.7;
+    background: #f8f9fa;
+}
+
+.todo-item.completed .todo-text {
+    text-decoration: line-through;
+    color: #636e72;
+}
+
+.todo-content {
+    flex: 1;
+}
+
+.todo-text {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+    color: #2d3436;
+}
+
+.todo-date {
+    font-size: 0.9rem;
+    color: #636e72;
+}
+
+.todo-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.todo-actions button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.complete-btn {
+    background: #00b894;
+    color: white;
+}
+
+.complete-btn:hover {
+    background: #00a085;
+    transform: scale(1.05);
+}
+
+.edit-btn {
+    background: #fdcb6e;
+    color: white;
+}
+
+.edit-btn:hover {
+    background: #f39c12;
+    transform: scale(1.05);
+}
+
+.delete-btn {
+    background: #e17055;
+    color: white;
+}
+
+.delete-btn:hover {
+    background: #d63031;
+    transform: scale(1.05);
+}
+
+/* 달력 뷰 */
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 15px 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.calendar-header button {
+    padding: 10px 15px;
+    background: #6c5ce7;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.calendar-header button:hover {
+    background: #5f3dc4;
+    transform: scale(1.1);
+}
+
+.calendar-header h2 {
+    color: #6c5ce7;
+    font-size: 1.5rem;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    /* 달력 배경에 꽃무늬 패턴 적용 */
+    background:
+        radial-gradient(circle at 12px 12px, rgba(255, 182, 193, 0.10) 6px, transparent 6px),
+        radial-gradient(circle at 28px 12px, rgba(255, 182, 193, 0.10) 6px, transparent 6px),
+        radial-gradient(circle at 12px 28px, rgba(255, 182, 193, 0.10) 6px, transparent 6px),
+        radial-gradient(circle at 28px 28px, rgba(255, 182, 193, 0.10) 6px, transparent 6px),
+        radial-gradient(circle at 20px 20px, rgba(255, 221, 87, 0.16) 2px, transparent 2px),
+        rgba(255, 255, 255, 0.9);
+    background-size: 40px 40px, 40px 40px, 40px 40px, 40px 40px, 40px 40px, auto;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+/* 캘린더 2컬럼 레이아웃 */
+.calendar-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+
+.calendar-day {
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    cursor: pointer;
+    border-radius: 10px;
+    position: relative;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    padding: 8px;
+}
+
+.calendar-day:hover {
+    background: #ddd6fe;
+    transform: scale(1.05);
+}
+
+.calendar-day.selected {
+    background: #6c5ce7;
+    color: white;
+}
+
+.calendar-day.other-month {
+    color: #b2bec3;
+}
+
+.calendar-day-number {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #2d3436;
+}
+
+.calendar-todo-item {
+    font-size: 0.7rem;
+    background: #00b894;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 8px;
+    margin-bottom: 2px;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 1.2;
+}
+
+.calendar-todo-item.completed {
+    background: #b2bec3;
+    text-decoration: line-through;
+}
+
+.calendar-todo-more {
+    font-size: 0.6rem;
+    color: #636e72;
+    font-style: italic;
+}
+
+.calendar-day-header {
+    font-weight: bold;
+    color: #6c5ce7;
+    background: #f8f9fa;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.selected-date-todos {
+    /* 상세 패널에도 꽃무늬를 아주 은은하게 */
+    background:
+        radial-gradient(circle at 10px 10px, rgba(255, 182, 193, 0.09) 5px, transparent 5px),
+        radial-gradient(circle at 22px 10px, rgba(255, 182, 193, 0.09) 5px, transparent 5px),
+        radial-gradient(circle at 10px 22px, rgba(255, 182, 193, 0.09) 5px, transparent 5px),
+        radial-gradient(circle at 22px 22px, rgba(255, 182, 193, 0.09) 5px, transparent 5px),
+        radial-gradient(circle at 16px 16px, rgba(255, 221, 87, 0.14) 1.5px, transparent 1.5px),
+        rgba(255, 255, 255, 0.9);
+    background-size: 32px 32px, 32px 32px, 32px 32px, 32px 32px, 32px 32px, auto;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.selected-date-todos h3 {
+    color: #6c5ce7;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+}
+
+/* 모달 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background: white;
+    margin: 15% auto;
+    padding: 30px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.close:hover {
+    color: #e17055;
+}
+
+.modal-content h2 {
+    color: #6c5ce7;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 12px 16px;
+    margin-bottom: 15px;
+    border: 2px solid #ddd6fe;
+    border-radius: 10px;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.modal-content input:focus {
+    border-color: #6c5ce7;
+    box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.modal-buttons button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+#saveEditBtn {
+    background: #00b894;
+    color: white;
+}
+
+#saveEditBtn:hover {
+    background: #00a085;
+    transform: translateY(-2px);
+}
+
+#cancelEditBtn {
+    background: #636e72;
+    color: white;
+}
+
+#cancelEditBtn:hover {
+    background: #2d3436;
+    transform: translateY(-2px);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    .add-todo-form {
+        flex-direction: column;
+    }
+    
+    .todo-item {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .calendar-grid {
+        gap: 2px;
+        padding: 10px;
+    }
+
+    .calendar-layout {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal-content {
+        margin: 30% auto;
+        padding: 20px;
+    }
+} 
